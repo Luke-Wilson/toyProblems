@@ -20,48 +20,52 @@ function chooseBestSum(t, k, ls) {
   return largestTotal;
 }
 
-var getTotals = function(collection, max) {
-  var combos = [];
-  var innerFunc = function(tempArray = []) {
+function getTotals (collection, max) {
+  var results = [];
+  var innerFunc = function(tempArray, newCollection) {
+    console.log('tempArray.length = ', tempArray.length, ' and max = ', max);
     if (tempArray.length === max) {
-      var newArray = [...tempArray];
-      combos.push(newArray);
+      var subTotal = tempArray.reduce((a,b) => a + b);
+      results.push(subTotal);
       return;
     }
 
-    collection.forEach(num => {
+    newCollection.forEach((num, index) => {
       if (tempArray.indexOf(num) < 0) {
         tempArray.push(num);
-        innerFunc(tempArray);
+        innerFunc(tempArray, newCollection.slice(index));
         tempArray.pop();
       }
     });
   };
 
-  innerFunc();
-
-  var results = combos.map(array => {
-    return array.reduce((a,b) => a+b);
-  })
+  innerFunc([], collection);
   return results;
-}
+};
 
 
 // O - biggest possible sum of distances available from input constraints
 // I - t (max sum of distances John will travel), k (number of towns to visit, k >= 1), ls(array of distances between towns)
 // C - none
 // E -
-var ts = [50, 55, 56, 57, 58];
-console.log(chooseBestSum(163, 3, ts)); //163
+
+// var ms = [1,2,3,4,5];
+// console.log(chooseBestSum(19, 3, ms));
 
 
-var xs = [50];
-console.log(chooseBestSum(163, 3, xs)); //-> nil (or null or ... or -1 (C++)
+// var ts = [50, 55, 56, 57, 58];
+// console.log(chooseBestSum(163, 3, ts)); //163
 
 
-var ys = [91, 74, 73, 85, 73, 81, 87];
-console.log(chooseBestSum(230, 3, ys)); //-> 228
+// var xs = [50];
+// console.log(chooseBestSum(163, 3, xs)); //-> nil (or null or ... or -1 (C++)
 
+
+// var ys = [91, 74, 73, 85, 73, 81, 87];
+// console.log(chooseBestSum(230, 3, ys)); //-> 228
+
+var test1 = [100, 76, 56, 44, 89, 73, 68, 56, 64, 123, 2333, 144, 50, 132, 123, 34, 89];
+console.log(chooseBestSum(2430, 15, test1)); //-> 1287
 
 
 
