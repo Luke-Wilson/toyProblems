@@ -23,7 +23,6 @@ function chooseBestSum(t, k, ls) {
 function getTotals (collection, max) {
   var results = [];
   var innerFunc = function(tempArray, newCollection) {
-    console.log('tempArray.length = ', tempArray.length, ' and max = ', max);
     if (tempArray.length === max) {
       var subTotal = tempArray.reduce((a,b) => a + b);
       results.push(subTotal);
@@ -31,17 +30,27 @@ function getTotals (collection, max) {
     }
 
     newCollection.forEach((num, index) => {
-      if (tempArray.indexOf(num) < 0) {
-        tempArray.push(num);
-        innerFunc(tempArray, newCollection.slice(index));
-        tempArray.pop();
-      }
+      tempArray.push(num);
+      innerFunc(tempArray, newCollection.slice(index+1));
+      tempArray.pop();
     });
   };
 
   innerFunc([], collection);
   return results;
 };
+
+// [1,2,3,4,5]
+
+// [1,2] [3,4,5]
+// [1,2,3] [4,5]
+// [1,2,4] [5]
+// [1,2,5] []
+// [1,3] [4,5]
+// [1,3,4] [5]
+// [1,3,5] [] --> pop
+// [1,3] [] --> pop
+// [1,4]
 
 
 // O - biggest possible sum of distances available from input constraints
@@ -53,8 +62,8 @@ function getTotals (collection, max) {
 // console.log(chooseBestSum(19, 3, ms));
 
 
-// var ts = [50, 55, 56, 57, 58];
-// console.log(chooseBestSum(163, 3, ts)); //163
+var ts = [50, 55, 56, 57, 58];
+console.log(chooseBestSum(163, 3, ts)); //163
 
 
 // var xs = [50];
