@@ -9,20 +9,14 @@
 // The sums of distances are then: 162, 163, 165, 165, 167, 168, 170, 172, 173, 175.
 
 function chooseBestSum(t, k, ls) {
-  // create largestTotal and set to null as default
-  var largestTotal = null;
-
-  function updateTotal(totals) {
-    totals.forEach(total => {
-      if (total > largestTotal && total <= t) {
-        largestTotal = total;
-      }
-    });
-    return largestTotal;
-  }
-
   var totals = getTotals(ls, k);
-  updateTotal(totals);
+
+  var largestTotal = null;
+  totals.forEach(total => {
+    if (total > largestTotal && total <= t) {
+      largestTotal = total;
+    }
+  });
   return largestTotal;
 }
 
@@ -34,6 +28,7 @@ var getTotals = function(collection, max) {
       combos.push(newArray);
       return;
     }
+
     collection.forEach(num => {
       if (tempArray.indexOf(num) < 0) {
         tempArray.push(num);
@@ -50,8 +45,6 @@ var getTotals = function(collection, max) {
   })
   return results;
 }
-
-
 
 
 // O - biggest possible sum of distances available from input constraints
