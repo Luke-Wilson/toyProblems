@@ -40,31 +40,8 @@ function getTotals (collection, max) {
   return results;
 };
 
-// [1,2,3,4,5]
-
-// [1,2] [3,4,5]
-// [1,2,3] [4,5]
-// [1,2,4] [5]
-// [1,2,5] []
-// [1,3] [4,5]
-// [1,3,4] [5]
-// [1,3,5] [] --> pop
-// [1,3] [] --> pop
-// [1,4]
-
-
-// O - biggest possible sum of distances available from input constraints
-// I - t (max sum of distances John will travel), k (number of towns to visit, k >= 1), ls(array of distances between towns)
-// C - none
-// E -
-
-// var ms = [1,2,3,4,5];
-// console.log(chooseBestSum(19, 3, ms));
-
-
-var ts = [50, 55, 56, 57, 58];
-console.log(chooseBestSum(163, 3, ts)); //163
-
+// var ts = [50, 55, 56, 57, 58];
+// console.log(chooseBestSum(163, 3, ts)); //163
 
 // var xs = [50];
 // console.log(chooseBestSum(163, 3, xs)); //-> nil (or null or ... or -1 (C++)
@@ -73,13 +50,5 @@ console.log(chooseBestSum(163, 3, ts)); //163
 // var ys = [91, 74, 73, 85, 73, 81, 87];
 // console.log(chooseBestSum(230, 3, ys)); //-> 228
 
-var test1 = [100, 76, 56, 44, 89, 73, 68, 56, 64, 123, 2333, 144, 50, 132, 123, 34, 89];
-console.log(chooseBestSum(2430, 15, test1)); //-> 1287
-
-
-
-
-
-
-
-
+// var test1 = [100, 76, 56, 44, 89, 73, 68, 56, 64, 123, 2333, 144, 50, 132, 123, 34, 89];
+// console.log(chooseBestSum(2430, 15, test1)); //-> 1287
