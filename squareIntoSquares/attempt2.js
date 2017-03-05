@@ -22,12 +22,10 @@ var decompose = function(n) {
   var answers = [];
   var innerFunc = function(total, list, current = []) {
     var currentTotal = current.length > 0 ? current.reduce((a,b) => a + b) : 0;
-    console.log(current, currentTotal, total);
-    console.log('answers', answers);
 
     //base case
     if (currentTotal === total) {
-      console.log('>>>>>>>>>>>>>>>>> answer found <<<<<<<<<<<<<<<<<<');
+      console.log('>>>>>>>>>>>>>>>>> answer found <<<<<<<<<<<<<<<<<<', current);
       answers.push([...current]);
       return;
     }
@@ -57,10 +55,24 @@ var decompose = function(n) {
   //kick off
   innerFunc(n*n, possibles);
 
-  console.log('-------final-------', answers);
-  return answers.length > 0 ? answers[0].map(ele => Math.sqrt(ele)) : null;
+  console.log('-------all answers-------', answers);
+  var largestValueAnswer = findLargestValues(answers)
+  return largestValueAnswer.length > 0 ? largestValueAnswer.map(ele => Math.sqrt(ele)) : null;
 };
 
-console.log(decompose(11)) // [1,2,4,10];
+function findLargestValues (array) {
+  if (array.length === 0) return array;
+  return array.reduce((a,b) => {
+    if (b[b.length-1] > a[a.length-1]) {
+      return b;
+    }
+    return a;
+  });
+}
 
-// console.log(decompose(7));
+
+
+
+
+console.log(decompose(11)) // [1,2,4,10];
+console.log(decompose(7));
