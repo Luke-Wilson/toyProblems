@@ -1,5 +1,6 @@
 var getAnswer = function(possibles, target, answer = []) {
   //base case
+  // console.log(possibles);
   var remaining = target;
   if (remaining === 0) {
     return answer;
@@ -9,6 +10,7 @@ var getAnswer = function(possibles, target, answer = []) {
     if (possibles[i] <= remaining) {
       remaining -= possibles[i];
       answer.unshift(possibles[i]);
+      // console.log('testing', possibles[i])
       var potentialAnswer = getAnswer(possibles.slice(i+1), remaining, answer);
       if (potentialAnswer !== null) {
         return potentialAnswer;
@@ -25,6 +27,7 @@ var decompose = function(n) {
   for (var i = 1; i < n; i++ ) {
     possibles.unshift(i * i);
   }
+  // console.log(possibles);
   var result = getAnswer(possibles, n*n);
   if (!Array.isArray(result)) {
     return null;
@@ -35,8 +38,8 @@ var decompose = function(n) {
 
 var squares11 = [100,81,64,49,36,25,16,9,4,1];
 
-// console.log(getAnswer(squares11, 121));
-console.log(decompose(11))
-// console.log(decompose(50))  //Expected: '[1, 3, 5, 8, 49]', instead got: '[14, 48]'
+// console.log(decompose(625));
+console.log(decompose(50))  //Expected: '[1, 3, 5, 8, 49]', instead got: '[14, 48]'
 
+// decompose(11)
 
