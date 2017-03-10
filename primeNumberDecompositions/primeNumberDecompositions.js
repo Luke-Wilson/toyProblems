@@ -1,19 +1,37 @@
-function getAllPrimeFactors(n, results = [], primes) {
+function getAllPrimeFactors(n, results = [], recursing = false) {
+  //edge cases
+  console.log(n, typeof n)
+  if (!recursing) {
+    if (n === 0 || typeof n !== 'integer') return [];
+    if (n <= 2) return [n];
+  }
+
   //base case
   if (n === 1) {
     return results;
   }
 
-  primes = primes || findPrimesBelow(n);
-  for (var i = 0; i < primes.length; i++) {
-    if (n % primes[i] === 0) {
-      results.push(primes[i]);
-      return getAllPrimeFactors(n / primes[i], results, primes);
+  //edge case for 2
+  if (n % 2 === 0) {
+    results.push(2);
+    return getAllPrimeFactors(n/2, results, true);
+  }
+
+  //check other prime divisibility
+  for (var i = 3; i <= n; i+=2) {
+    if (n % i === 0) {
+      results.push(i);
+      return getAllPrimeFactors(n / i, results, true);
     }
   }
+
 }
 
 function getUniquePrimeFactorsWithCount(n) {
+  //edge cases
+  if (n === 0 || typeof n !== 'integer') return [[],[]];
+  if (n <= 2) return [[n],[1]];
+
   var allPrimeFactors = getAllPrimeFactors(n);
   var countObj = {};
   var results = [[], []]
@@ -28,6 +46,10 @@ function getUniquePrimeFactorsWithCount(n) {
 }
 
 function getUniquePrimeFactorsWithProducts(n) {
+  //edge cases
+  if (n === 0 || typeof n !== 'integer') return [];
+  if (n <= 2) return [n];
+
   var uniqueWithCount = getUniquePrimeFactorsWithCount(n);
   var results = [];
   for (var i = 0; i < uniqueWithCount[0].length; i++) {
@@ -38,28 +60,15 @@ function getUniquePrimeFactorsWithProducts(n) {
   return results;
 }
 
-//HELPERS:
-function isPrime (num) {
-  if (num === 2) return true;
-  if (num % 2 === 0) return false;
-  var upperMax = Math.floor(num / 2);
-  for (var i = 3; i <= upperMax; i += 2) {
-    if (num % i === 0) {
-      return false;
-    }
-  }
-  return true;
-};
 
-function findPrimesBelow(limit) {
-  var primes = [];
-  for (var i = 2; i <= limit; i++) {
-    if (isPrime(i)) {
-      primes.push(i);
-    }
-  }
-  return primes;
-}
+// console.log(findPrimesBelow(1000001))
+console.log(getAllPrimeFactors(1))
+console.log(getUniquePrimeFactorsWithCount(1))
+console.log(getUniquePrimeFactorsWithProducts(1));
+
+
+
+// console.log(findPrimesBelow(100));
 
 //getAllPrimeFactors
 //o - an array of prime numbers that when multiplied together = n
