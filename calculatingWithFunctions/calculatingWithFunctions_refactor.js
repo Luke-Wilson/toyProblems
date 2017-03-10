@@ -1,9 +1,3 @@
-// var n = function(digit) {
-//   return function(op) {
-//     return op ? op(digit) : digit;
-//   }
-// };
-
 var n = function(num) {
   return function(operator) {
     return operator ? operator(num) : num;
