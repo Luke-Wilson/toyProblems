@@ -1,17 +1,16 @@
 function luxhouse(houses) {
-  var newHouses = [];
-  //loop backwards through array
-  var max = 0;
-  for (var i = houses.length - 1; i >= 0; i--) {
-    var house = houses[i];
-    if (house > max) {
-      newHouses.unshift(0);
-      max = house;
-    } else if (house <= max) {
-      newHouses.unshift(max+1-house);
+  var lux = 0;
+
+  var newHouses = houses.reverse().map(house => {
+    if (house > lux) {
+      lux = house;
+      return 0;
     }
-  }
-  return newHouses;
+    else {
+      return (lux + 1 - house);
+    }
+  });
+  return newHouses.reverse();
 }
 
 // luxhouse([1,2,3,1,2])
