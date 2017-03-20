@@ -1,6 +1,52 @@
-function weakNumbers () {
+function weakNumbers (num) {
+  var allWeaknesses = {};
 
+  function getWeakness(x) {
+    var total = 0;
+    var xDivisors = countDivisors(x);
+
+    var weaknesses = {};
+
+    for (var i = 1; i < x; i++) {
+      if (countDivisors(i) > xDivisors) {
+        total++;
+      }
+    }
+    allWeaknesses[x] = total;
+
+  }
+
+  for (var i = 1; i <= num; i++) {
+    getWeakness(i);
+  }
+
+  var highestWeakness = 0;
+  var numsWithHighWeakness = 0;
+  for (var key in allWeaknesses) {
+    if (allWeaknesses[key] === highestWeakness) {
+      numsWithHighWeakness++;
+    }
+    if (allWeaknesses[key] > highestWeakness) {
+      highestWeakness = allWeaknesses[key]
+      numsWithHighWeakness = 1;
+    }
+  }
+  return [highestWeakness, numsWithHighWeakness]
 }
+
+function countDivisors(num) {
+  if (num === 0) return 0
+  var count = 0;
+  for (var i = 1; i <= num; i++) {
+    if (num % i === 0) {
+      count++;
+    }
+  }
+  return count;
+}
+
+console.log(weakNumbers(500));
+
 
 // We define the weakness of number x as the number of positive integers smaller than x that have more divisors than x.
 
