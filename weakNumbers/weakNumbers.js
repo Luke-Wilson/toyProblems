@@ -1,51 +1,12 @@
-function weakNumbers (num) {
-  var allWeaknesses = {};
+// O - an array,
+//   1st element is the weakness of the weakest number(s) in the range 1-n
+//   2nd element is the number of numbers in the range 1-n that share that weakness
+// I - positive integer, n
+// C - should be fairly fast, able to handle inputs up to 500.
+// E - 9 => [2,2]
 
-  function getWeakness(x) {
-    var total = 0;
-    var xDivisors = countDivisors(x);
 
-    var weaknesses = {};
 
-    for (var i = 1; i < x; i++) {
-      if (countDivisors(i) > xDivisors) {
-        total++;
-      }
-    }
-    allWeaknesses[x] = total;
-
-  }
-
-  for (var i = 1; i <= num; i++) {
-    getWeakness(i);
-  }
-
-  var highestWeakness = 0;
-  var numsWithHighWeakness = 0;
-  for (var key in allWeaknesses) {
-    if (allWeaknesses[key] === highestWeakness) {
-      numsWithHighWeakness++;
-    }
-    if (allWeaknesses[key] > highestWeakness) {
-      highestWeakness = allWeaknesses[key]
-      numsWithHighWeakness = 1;
-    }
-  }
-  return [highestWeakness, numsWithHighWeakness]
-}
-
-function countDivisors(num) {
-  if (num === 0) return 0
-  var count = 0;
-  for (var i = 1; i <= num; i++) {
-    if (num % i === 0) {
-      count++;
-    }
-  }
-  return count;
-}
-
-console.log(weakNumbers(500));
 
 
 // We define the weakness of number x as the number of positive integers smaller than x that have more divisors than x.
@@ -70,3 +31,57 @@ console.log(weakNumbers(500));
 // 7: d(7) = 2, weakness(7) = 2;
 // 8: d(8) = 4, weakness(8) = 0;
 // 9: d(9) = 3, weakness(9) = 2;
+
+function weakNumbers(num) {
+  //build array of objects with {number: _, divisors: _}
+  var allDivisors = [];
+
+  for (var i = 1; i <= num; i++) {
+    var divisorsI = getDivisors(i)
+    var weakness = 0;
+    allDivisors.forEach(item => {
+      if (item.divisors > divisorsI) {
+        weakness++;
+      }
+    });
+
+    var obj = {
+      number: i,
+      divisors: divisorsI,
+      weakness: weakness
+    };
+
+    allDivisors.push(obj);
+  }
+
+  // return allDivisors;
+
+
+
+  //find highest
+  var weakestWeakness = 0;
+  var numberOfWeakests = 0;
+  allDivisors.forEach(obj => {
+    if (obj.weakness === weakestWeakness) {
+      numberOfWeakests++;
+    }
+    if (obj.weakness > weakestWeakness) {
+      weakestWeakness = obj.weakness;
+      numberOfWeakests = 1;
+    }
+  });
+  return [weakestWeakness, numberOfWeakests];
+}
+
+
+function getDivisors(x) {
+  var divisors = 0;
+  for (var i = 1; i <= x; i++) {
+    if (x % i === 0) {
+      divisors++;
+    }
+  }
+  return divisors;
+}
+
+console.log(weakNumbers(9));
