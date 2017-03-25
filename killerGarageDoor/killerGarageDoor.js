@@ -1,3 +1,42 @@
+function door(events) {
+console.log(events)
+  var output = '';
+  var paused = true;
+  var direction = 1;
+  var doorPosition = 0;
+
+  for (var i = 0; i < events.length; i++) {
+    if (events[i] === 'P' && paused) {
+      doorPosition += direction;
+      paused = false;
+    } else if (events[i] === 'P' && !paused) {
+      paused = true;
+    }
+
+    if (events[i] === '.' && !paused) {
+      doorPosition += direction;
+    }
+    if (events[i] === 'O') {
+      direction *= -1;
+      doorPosition += direction;
+    }
+    if ((doorPosition >= 5 || doorPosition <= 0) && !paused) {
+      paused = true;
+      direction *= -1;
+    }
+
+    output += doorPosition.toString();
+  }
+  return output;
+}
+
+
+var str = '...............P.P........P....';
+console.log(door(str));
+
+
+
+
 // You have been hired by a company making electric garage doors. Accidents with the present product line have resulted in numerous damaged cars, broken limbs and several killed pets. Your mission is to write a safer version of their controller software.
 
 // Specification
@@ -7,7 +46,7 @@
 // If the door is closed, a push starts opening the door, and vice-versa
 // It takes 5 seconds for the door to open or close completely
 // While the door is moving, one push pauses movement, another push resumes movement in the same direction
-// In order to make the door safer, it has been equiped with resistance-based obstacle detection. When the door detects an obstacle, it must immediately reverse the direction of movement.
+// In order to make the door safer, it has been equipped with resistance-based obstacle detection. When the door detects an obstacle, it must immediately reverse the direction of movement.
 
 // Input
 
