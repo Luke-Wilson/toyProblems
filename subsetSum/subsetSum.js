@@ -37,10 +37,7 @@ function subsetSum (arr, n) {
 
     //recursive case
     for (var i = 0; i < array.length && total < n; i++) {
-      subset.push(array[i]);
-      var sliced = array.slice(i+1);
-      permutations(subset, sliced);
-      subset.pop();
+      permutations([...subset, array[i]], array.slice(i+1));
     }
   };
 
